@@ -1,22 +1,19 @@
 package com.jackyjjc.LD27;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-
 /**
  * @author Junjie CHEN(jacky.jjchen@gmail.com)
  */
 public class GamePlayInput {
 
     private GameMapRenderer mapRenderer;
+    private HeroController heroController;
 
-    public GamePlayInput(GameMapRenderer mapRenderer) {
+    public GamePlayInput(GameMap gameMap, GameMapRenderer mapRenderer) {
         this.mapRenderer = mapRenderer;
+        this.heroController = new HeroController(gameMap);
     }
 
     public void tick() {
-
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) mapRenderer.panHorizontal(1);
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) mapRenderer.panHorizontal(-1);
+        heroController.tick();
     }
 }

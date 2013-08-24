@@ -10,49 +10,37 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  */
 public class GamePlayScreen implements Screen {
 
-    private static final long TICKS_PER_SEC = 1;
+    private static final long TICKS_PER_SEC = 10;
     private static final double MILLISEC_PER_TICK = 1000.0 / TICKS_PER_SEC;
-
-    private static final double INPUT_MILLISEC_PER_TICK = 100;
 
     private Rogue rogue;
     private double timeDiff;
     private double timeAcc;
-    private double inputTimeAcc;
 
-    private ShapeRenderer debugRenderer;
     private GameMapRenderer gameMapRenderer;
 
-    private GameGraphics graphics;
     private GamePlayInput input;
 
     public GamePlayScreen(Rogue rogue, GameGraphics graphics) {
 
         this.rogue = rogue;
-        this.graphics = graphics;
 
         this.timeDiff = 0;
         this.timeAcc = 0;
-        this.inputTimeAcc = 0;
 
         this.gameMapRenderer = new GameMapRenderer(rogue.gameMap, graphics);
-        this.input = new GamePlayInput(this.gameMapRenderer);
+        this.input = new GamePlayInput(rogue.gameMap, this.gameMapRenderer);
     }
 
     @Override
     public void render(float delta) {
 
         timeAcc += delta * 1000 - timeDiff;
-        inputTimeAcc += delta * 1000 - timeDiff;
 
         long startTime = System.currentTimeMillis();
 
-        while(inputTimeAcc > INPUT_MILLISEC_PER_TICK) {
-            input.tick();
-            inputTimeAcc -= INPUT_MILLISEC_PER_TICK;
-        }
-
         while(timeAcc > MILLISEC_PER_TICK) {
+            input.tick();
             rogue.tick();
             timeAcc -= MILLISEC_PER_TICK;
         }

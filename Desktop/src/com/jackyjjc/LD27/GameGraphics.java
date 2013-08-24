@@ -5,17 +5,20 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /**
  * @author Junjie CHEN(jacky.jjchen@gmail.com)
  */
 public class GameGraphics {
 
+    public ShapeRenderer shapeRenderer;
     public SpriteBatch spriteBatch;
     public BitmapFont font;
     public AssetManager assetManager;
 
     public GameGraphics() {
+        this.shapeRenderer = new ShapeRenderer();
         this.spriteBatch = new SpriteBatch();
         this.font = new BitmapFont();
 

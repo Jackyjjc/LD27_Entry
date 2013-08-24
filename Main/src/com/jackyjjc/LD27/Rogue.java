@@ -32,6 +32,9 @@ public class Rogue extends Game {
 
     @Override
     public void create() {
+
+        this.gameMap.loadLevel(1);
+
         controller.initialize(this);
         setScreen(controller.getStartScreen());
     }

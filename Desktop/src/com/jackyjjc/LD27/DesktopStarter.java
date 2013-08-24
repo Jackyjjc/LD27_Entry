@@ -27,8 +27,9 @@ public class DesktopStarter {
         cfg.title = "LD27";
         cfg.useGL20 = true;
         cfg.width = 800;
-        cfg.height = 480;
+        cfg.height = 448;
         cfg.vSyncEnabled = false;
+        cfg.resizable = false;
 
         DesktopController controller = new DesktopController();
         Rogue rogue = new Rogue(controller);

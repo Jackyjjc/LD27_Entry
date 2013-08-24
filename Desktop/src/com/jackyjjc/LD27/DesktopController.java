@@ -1,25 +1,45 @@
 package com.jackyjjc.LD27;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * @author Junjie CHEN(jacky.jjchen@gmail.com)
  */
 public class DesktopController implements Controller {
 
-    private Screen startScreen;
+    public enum Screens {
+
+        LOAD(0),
+        PLAY(1);
+
+        private int id;
+
+        private Screens(int id) {
+            this.id = id;
+        }
+    }
+
+    private Rogue rogue;
+    private Screen[] screens;
+    private GameGraphics graphics;
 
     @Override
     public void initialize(Rogue rogue) {
-        this.startScreen = new GamePlayScreen(rogue,
-                                              new BitmapFont(),
-                                              new SpriteBatch());
+
+        this.rogue = rogue;
+        this.graphics = new GameGraphics();
+
+        this.screens = new Screen[Screens.values().length];
+        this.screens[Screens.LOAD.id] = new LoadScreen(this, graphics);
+        this.screens[Screens.PLAY.id] = new GamePlayScreen(rogue, graphics);
     }
 
     @Override
     public Screen getStartScreen() {
-        return startScreen;
+        return this.screens[0];
+    }
+
+    public void setScreen(Screens screen) {
+        rogue.setScreen(screens[screen.id]);
     }
 }

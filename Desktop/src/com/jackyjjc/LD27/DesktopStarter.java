@@ -26,7 +26,7 @@ public class DesktopStarter {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "LD27";
         cfg.useGL20 = true;
-        cfg.width = 800;
+        cfg.width = 1024;
         cfg.height = 448;
         cfg.vSyncEnabled = false;
         cfg.resizable = false;

@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class GameMapRenderer {
 
-    private static final int NUM_COLS = 33;
+    private static final int NUM_COLS = 32;
     private static final int NUM_ROWS = 12;
 
     private GameGraphics graphics;
@@ -76,9 +76,6 @@ public class GameMapRenderer {
         for (Unit enemy : enemies) {
             if(enemy.x() >= xOff) {
                 TextureRegion region = enemyTexture[2][0];
-                if(!region.isFlipX()) {
-                    region.flip(true, false);
-                }
                 renderUnit(batch, region, enemy, 1);
             }
         }
@@ -106,8 +103,18 @@ public class GameMapRenderer {
         float screenX = (unit.x() - xOff) * 32 + 4;
         float screenY = 384 - (unit.y() * 32 - 4);
 
+        boolean flipped = false;
+
         batch.begin();
+        if(unit.facing < 0) {
+            region.flip(true,false);
+            flipped = true;
+        }
         batch.draw(region, screenX, screenY);
+
+        if(flipped) {
+            region.flip(true, false);
+        }
         batch.end();
 
         //render the hp bar

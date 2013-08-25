@@ -28,5 +28,6 @@ public class GameGraphics {
         this.assetManager.load(Gdx.files.internal("Desktop/assets/heroes.png").path(), Texture.class);
         this.assetManager.load(Gdx.files.internal("Desktop/assets/effects.png").path(), Texture.class);
         this.assetManager.load(Gdx.files.internal("Desktop/assets/items.png").path(), Texture.class);
+        this.assetManager.load(Gdx.files.internal("Desktop/assets/font.png").path(), Texture.class);
     }
 }

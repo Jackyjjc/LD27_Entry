@@ -14,8 +14,13 @@ public class Unit {
     public int moveSpeed;
     public int maxHp;
     public int hp;
+    public int facing;
 
     public boolean moved;
+
+    public Unit() {
+        facing = 1;
+    }
 
     public void setPos(int x, int y) {
         this.x = x;

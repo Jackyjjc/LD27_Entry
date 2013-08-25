@@ -27,12 +27,16 @@ import java.util.List;
 public class Rogue extends Game {
 
     private Controller controller;
+    private Timer timer;
 
     public GameMap gameMap;
+
+    public boolean finished;
 
     public Rogue(Controller controller) {
         this.controller = controller;
         this.gameMap = new GameMap();
+        this.finished = false;
     }
 
     @Override
@@ -45,6 +49,17 @@ public class Rogue extends Game {
     }
 
     public void tick() {
+
+        //check if game finished
+        if(gameMap.getHeroes().isEmpty()) {
+            restart();
+            return;
+        }
+
+        if(timer.time == 0) {
+            finished = true;
+            return;
+        }
 
         //loop through all the heroes and see if there are any enemy in attack range
         for (Unit unit : gameMap.getAllUnits()) {
@@ -141,5 +156,14 @@ public class Rogue extends Game {
         }
 
         return target;
+    }
+
+    public void restart() {
+        gameMap.loadUnits();
+        timer.reset();
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
     }
 }

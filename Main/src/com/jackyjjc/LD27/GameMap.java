@@ -132,6 +132,8 @@ public class GameMap {
 
     public void moveUnitTo(Unit unit, int col, int row) {
 
+        unit.facing = col - unit.x();
+
         this.mapUnits[unit.y()][unit.x()] = null;
         unit.setPos(col, row);
         this.mapUnits[row][col] = unit;
@@ -147,9 +149,15 @@ public class GameMap {
 
         this.map = TiledLoader.createMap(Gdx.files.internal("Main/assets/level" + level + ".tmx"));
         this.mapData = map.layers.get(0).tiles;
+        loadUnits();
+    }
+
+    public void loadUnits() {
         this.mapUnits = new Unit[mapData.length][mapData[0].length];
         this.mapItems = new Item[mapData.length][mapData[0].length];
-
+        this.heroes.clear();
+        this.enemies.clear();
+        this.items.clear();
         //set the init pos of the hero
         addUnit(new Swordman(false), 5, 5);
         addUnit(new Goblin(), 7, 7);

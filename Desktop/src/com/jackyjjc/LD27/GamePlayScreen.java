@@ -20,9 +20,11 @@ public class GamePlayScreen implements Screen {
     private double timeAcc;
     private double inputTimeAcc;
 
+    private TimerRenderer timerRenderer;
     private GameMapRenderer gameMapRenderer;
 
     private GamePlayInput input;
+    private Timer timer;
 
     public GamePlayScreen(Rogue rogue, GameGraphics graphics) {
 
@@ -31,36 +33,48 @@ public class GamePlayScreen implements Screen {
         this.timeDiff = 0;
         this.timeAcc = 0;
         this.inputTimeAcc = 0;
+        this.timer = new Timer();
+        rogue.setTimer(timer);
 
         this.gameMapRenderer = new GameMapRenderer(rogue.gameMap, graphics);
+        this.timerRenderer = new TimerRenderer(graphics, timer);
         this.input = new GamePlayInput(rogue.gameMap, this.gameMapRenderer);
     }
 
     @Override
     public void render(float delta) {
 
-        timeAcc += delta * 1000 - timeDiff;
-        inputTimeAcc += delta * 1000 - timeDiff;
-
-        long startTime = System.currentTimeMillis();
-
-        while(inputTimeAcc > INPUT_MILLISEC_PER_TICK) {
-            input.tick();
-            inputTimeAcc -= INPUT_MILLISEC_PER_TICK;
+        if(!timer.start) {
+            timer.start();
         }
 
-        while(timeAcc > MILLISEC_PER_TICK) {
-            rogue.tick();
-            timeAcc -= MILLISEC_PER_TICK;
-        }
+        if(!rogue.finished) {
+            timeAcc += delta * 1000 - timeDiff;
+            inputTimeAcc += delta * 1000 - timeDiff;
 
-        timeDiff = (System.currentTimeMillis() - startTime) / 1000.0;
+            long startTime = System.currentTimeMillis();
+
+            while(inputTimeAcc > INPUT_MILLISEC_PER_TICK) {
+                input.tick();
+                inputTimeAcc -= INPUT_MILLISEC_PER_TICK;
+            }
+
+            while(timeAcc > MILLISEC_PER_TICK) {
+                rogue.tick();
+                timeAcc -= MILLISEC_PER_TICK;
+            }
+
+            timer.tick();
+
+            timeDiff = (System.currentTimeMillis() - startTime) / 1000.0;
+        }
 
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
         //render the game map
         this.gameMapRenderer.render();
+        this.timerRenderer.render();
     }
 
     @Override

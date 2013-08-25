@@ -32,34 +32,15 @@ public class HeroController {
             dy = 1;
         }
 
-        List<Hero> heroList = gameMap.getHeroes();
-        for(Hero hero : heroList) {
-            if(canMove(hero, dx, dy)) {
-                gameMap.moveUnitTo(hero, hero.x() + dx, hero.y() + dy);
+        if(dx != 0 || dy != 0) {
+            List<Hero> heroList = gameMap.getHeroes();
+            for(Hero hero : heroList) {
+                if(gameMap.canMoveTo(hero.x() + dx, hero.y() + dy)) {
+                    gameMap.moveUnitTo(hero, hero.x() + dx, hero.y() + dy);
+                }
             }
         }
     }
 
-    public boolean canMove(Hero hero, int dx, int dy) {
 
-        int newX = hero.x() + dx;
-        int newY = hero.y() + dy;
-
-        //filter out the ones that is not in the valid range
-        if(!gameMap.contains(newX, newY)) {
-            return false;
-        }
-
-        //check if there is already unit there
-        if(gameMap.getAt(newX, newY) != null) {
-            return false;
-        }
-
-        //check if tile walkable
-        if(!gameMap.walkable(newX, newY)) {
-            return false;
-        }
-
-        return true;
-    }
 }

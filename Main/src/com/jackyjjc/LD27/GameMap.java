@@ -53,7 +53,7 @@ public class GameMap {
     }
 
     public void removeItem(Item item) {
-        mapUnits[item.y()][item.x()] = null;
+        mapItems[item.y()][item.x()] = null;
         items.remove(item);
     }
 
@@ -110,7 +110,28 @@ public class GameMap {
         return col >= 0 && col < map.width && row >= 0 && row < map.height;
     }
 
+    public boolean canMoveTo(int x, int y) {
+
+        //filter out the ones that is not in the valid range
+        if(!contains(x, y)) {
+            return false;
+        }
+
+        //check if there is already unit there
+        if(getAt(x, y) != null) {
+            return false;
+        }
+
+        //check if tile walkable
+        if(!walkable(x, y)) {
+            return false;
+        }
+
+        return true;
+    }
+
     public void moveUnitTo(Unit unit, int col, int row) {
+
         this.mapUnits[unit.y()][unit.x()] = null;
         unit.setPos(col, row);
         this.mapUnits[row][col] = unit;
@@ -134,6 +155,15 @@ public class GameMap {
         addUnit(new Goblin(), 7, 7);
         addUnit(new Goblin(), 10, 10);
         addUnit(new Goblin(), 2, 2);
+        addUnit(new Goblin(), 2, 6);
+        addUnit(new Goblin(), 2, 7);
+        addUnit(new Goblin(), 2, 8);
+        addUnit(new Goblin(), 2, 9);
+        addUnit(new Goblin(), 2, 10);
+        addUnit(new Goblin(), 3, 1);
+        addUnit(new Goblin(), 3, 2);
+        addUnit(new Goblin(), 3, 3);
+        addUnit(new Goblin(), 2, 5);
         addItem(new BigHeart(), 7, 4);
     }
 }

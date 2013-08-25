@@ -16,8 +16,7 @@ package com.jackyjjc.LD27;
 
 import com.badlogic.gdx.Game;
 import com.jackyjjc.LD27.heroes.Hero;
-
-import java.util.List;
+import com.jackyjjc.LD27.items.Item;
 
 /**
  * @author Junjie CHEN(jacky.jjchen@gmail.com)
@@ -48,7 +47,6 @@ public class Rogue extends Game {
         for (Unit unit : gameMap.getAllUnits()) {
             unit.moved = false;
         }
-
 
         //loop through all the heroes and see if there are any enemy in attack range
         for (Hero hero : gameMap.getHeroes()) {
@@ -100,7 +98,7 @@ public class Rogue extends Game {
                     continue;
                 }
 
-                if((unit instanceof Hero && target instanceof Hero)
+                if(!(unit instanceof Hero && target instanceof Hero)
                    || (!(unit instanceof Hero) && !(target instanceof Hero))) {
                    found = true;
                 }

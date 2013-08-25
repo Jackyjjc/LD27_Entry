@@ -11,6 +11,7 @@ public class Unit {
     public int atk;
     public int def;
     public int range;
+    public int moveSpeed;
     public int maxHp;
     public int hp;
 

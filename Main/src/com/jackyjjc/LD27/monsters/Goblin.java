@@ -13,5 +13,6 @@ public class Goblin extends Unit {
         this.atk = 3;
         this.def = 0;
         this.range = 1;
+        this.moveSpeed = 1;
     }
 }

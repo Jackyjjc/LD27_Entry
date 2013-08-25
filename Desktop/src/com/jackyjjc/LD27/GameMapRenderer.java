@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.jackyjjc.LD27.heroes.Hero;
+import com.jackyjjc.LD27.items.Item;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class GameMapRenderer {
         TextureRegion[][] mapTexture = TextureRegion.split(graphics.assetManager.get("Desktop/assets/environments.png", Texture.class), 32, 32);
         TextureRegion[][] heroTexture = TextureRegion.split(graphics.assetManager.get("Desktop/assets/heroes.png", Texture.class), 24, 24);
         TextureRegion[][] enemyTexture = TextureRegion.split(graphics.assetManager.get("Desktop/assets/enemies.png", Texture.class), 24, 24);
+        TextureRegion[][] itemTexture = TextureRegion.split(graphics.assetManager.get("Desktop/assets/items.png", Texture.class), 24, 24);
 
         SpriteBatch batch = graphics.spriteBatch;
 
@@ -74,10 +76,29 @@ public class GameMapRenderer {
         for (Unit enemy : enemies) {
             if(enemy.x() >= xOff) {
                 TextureRegion region = enemyTexture[2][0];
-                region.flip(true, false);
+                if(!region.isFlipX()) {
+                    region.flip(true, false);
+                }
                 renderUnit(batch, region, enemy, 1);
             }
         }
+
+        //render items
+        for(Item item : gameMap.getItems()) {
+            if(item.x() >= xOff) {
+                TextureRegion region = itemTexture[0][item.type];
+                renderItem(batch, region, item);
+            }
+        }
+    }
+
+    public void renderItem(SpriteBatch batch, TextureRegion region, Item item) {
+        float screenX = (item.x() - xOff) * 32 + 4;
+        float screenY = 384 - (item.y() * 32 - 4);
+
+        batch.begin();
+        batch.draw(region, screenX, screenY);
+        batch.end();
     }
 
     public void renderUnit(SpriteBatch batch, TextureRegion region, Unit unit, int offset) {

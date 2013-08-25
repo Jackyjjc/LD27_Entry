@@ -1,6 +1,5 @@
 package com.jackyjjc.LD27.heroes;
 
-import com.badlogic.gdx.math.Vector2;
 import com.jackyjjc.LD27.Unit;
 
 /**

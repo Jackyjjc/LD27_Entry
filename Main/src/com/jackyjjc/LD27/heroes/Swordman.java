@@ -12,5 +12,6 @@ public class Swordman extends Hero {
         this.atk = 5;
         this.def = 1;
         this.range = 1;
+        this.moveSpeed = 1;
     }
 }

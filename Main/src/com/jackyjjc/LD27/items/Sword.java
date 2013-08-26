@@ -8,8 +8,19 @@
 
 package com.jackyjjc.LD27.items;
 
+import com.jackyjjc.LD27.Unit;
+
 /**
  * @author Junjie CHEN(jacky.jjchen@gmail.com)
  */
-public class Sword {
+public class Sword extends Item {
+
+    public Sword() {
+        super(7);
+    }
+
+    @Override
+    public void interact(Unit unit) {
+        unit.atk += 5;
+    }
 }

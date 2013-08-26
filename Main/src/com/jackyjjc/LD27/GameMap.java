@@ -5,8 +5,7 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledLoader;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.jackyjjc.LD27.heroes.Hero;
 import com.jackyjjc.LD27.heroes.Swordman;
-import com.jackyjjc.LD27.items.BigHeart;
-import com.jackyjjc.LD27.items.Item;
+import com.jackyjjc.LD27.items.*;
 import com.jackyjjc.LD27.monsters.Goblin;
 
 import java.util.ArrayList;
@@ -160,11 +159,14 @@ public class GameMap {
         this.items.clear();
         //set the init pos of the hero
         addUnit(new Swordman(false), 5, 5);
-        generateEnemies(5);
-        addItem(new BigHeart(), 7, 4);
+        generateEnemies(3);
+        generateItems(2);
     }
 
     public void generateEnemies(int numEnemies) {
+
+        int counter = 0;
+
         for(int i = 0; i < numEnemies; i++) {
 
             int x, y;
@@ -172,8 +174,44 @@ public class GameMap {
             do {
                 x = (int) (Math.random() * 32);
                 y = (int) (Math.random() * 12);
+                counter++;
+                if(counter > 1000) {
+                    return;
+                }
             } while (!isEmpty(x, y) || y == 0 || y == 11 || x == 0 || x == 31);
             addUnit(new Goblin(), x, y);
+        }
+    }
+
+    public void generateItems(int numItems) {
+
+        int counter = 0;
+
+        for(int i = 0; i < numItems; i++) {
+
+            int x, y;
+
+            do {
+                x = (int) (Math.random() * 32);
+                y = (int) (Math.random() * 12);
+
+                counter++;
+                if(counter > 1000) {
+                    return;
+                }
+            } while (!isEmpty(x, y) || y == 0 || y == 11 || x == 0 || x == 31);
+
+            int ran = (int) (Math.random() * 1000);
+            if(ran >= 0 && ran < 250) {
+                addItem(new BigHeart(), x, y);
+            } else if(ran >= 250 && ran < 500) {
+                addItem(new SmallHeart(), x, y);
+            } else if(ran >= 500 && ran <= 750) {
+                addItem(new Shield(), x, y);
+            } else {
+                addItem(new Sword(), x, y);
+            }
+
         }
     }
 

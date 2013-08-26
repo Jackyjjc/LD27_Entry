@@ -8,8 +8,19 @@
 
 package com.jackyjjc.LD27.items;
 
+import com.jackyjjc.LD27.Unit;
+
 /**
  * @author Junjie CHEN(jacky.jjchen@gmail.com)
  */
-public class Shield {
+public class Shield extends Item {
+
+    public Shield() {
+        super(2);
+    }
+
+    @Override
+    public void interact(Unit unit) {
+        unit.def += 1;
+    }
 }

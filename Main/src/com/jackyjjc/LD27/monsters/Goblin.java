@@ -8,9 +8,9 @@ import com.jackyjjc.LD27.Unit;
 public class Goblin extends Unit {
 
     public Goblin() {
-        this.maxHp = 50;
+        this.maxHp = 30;
         this.hp = maxHp;
-        this.atk = 3;
+        this.atk = 5;
         this.def = 0;
         this.range = 1;
         this.moveSpeed = 1;

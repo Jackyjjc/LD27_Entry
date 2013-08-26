@@ -66,6 +66,7 @@ public class Rogue extends Game {
 
         if(timer.time < lastTime) {
             gameMap.generateEnemies(5);
+            gameMap.generateItems(2);
             lastTime -= 1000;
         }
 

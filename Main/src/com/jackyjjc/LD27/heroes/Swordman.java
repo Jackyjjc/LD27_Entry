@@ -7,9 +7,9 @@ public class Swordman extends Hero {
 
     public Swordman(boolean isMale) {
         super(1, isMale);
-        this.maxHp = 100;
-        this.hp = 100;
-        this.atk = 50000;
+        this.maxHp = 200;
+        this.hp = 200;
+        this.atk = 10;
         this.def = 1;
         this.range = 1;
         this.moveSpeed = 1;

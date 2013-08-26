@@ -42,7 +42,7 @@ public class Astar {
                     backup = pq.poll();
                 }
 
-                if(backup.getCost() == cur.getCost()) {
+                if(cur != null && backup != null && backup.getCost() == cur.getCost()) {
                     cur = (Math.random() * 1000 > 500) ? backup : cur;
                 }
 

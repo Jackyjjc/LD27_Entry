@@ -160,18 +160,35 @@ public class GameMap {
         this.items.clear();
         //set the init pos of the hero
         addUnit(new Swordman(false), 5, 5);
-        addUnit(new Goblin(), 7, 7);
-        addUnit(new Goblin(), 10, 10);
-        addUnit(new Goblin(), 2, 2);
-        addUnit(new Goblin(), 2, 6);
-        addUnit(new Goblin(), 2, 7);
-        addUnit(new Goblin(), 2, 8);
-        addUnit(new Goblin(), 2, 9);
-        addUnit(new Goblin(), 2, 10);
-        addUnit(new Goblin(), 3, 1);
-        addUnit(new Goblin(), 3, 2);
-        addUnit(new Goblin(), 3, 3);
-        addUnit(new Goblin(), 2, 5);
+        generateEnemies(5);
         addItem(new BigHeart(), 7, 4);
+    }
+
+    public void generateEnemies(int numEnemies) {
+        for(int i = 0; i < numEnemies; i++) {
+
+            int x, y;
+
+            do {
+                x = (int) (Math.random() * 32);
+                y = (int) (Math.random() * 12);
+            } while (!isEmpty(x, y) || y == 0 || y == 11 || x == 0 || x == 31);
+            addUnit(new Goblin(), x, y);
+        }
+    }
+
+    public boolean isEmpty (int col, int row) {
+
+        assert contains(col, row);
+
+        if(mapUnits[row][col] != null) {
+            return false;
+        }
+
+        if(mapItems[row][col] != null) {
+            return false;
+        }
+
+        return true;
     }
 }

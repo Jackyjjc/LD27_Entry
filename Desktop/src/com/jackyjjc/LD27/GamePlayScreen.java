@@ -20,11 +20,13 @@ public class GamePlayScreen implements Screen {
     private double timeAcc;
     private double inputTimeAcc;
 
+    private GameStartController gameStartController;
     private TimerRenderer timerRenderer;
     private GameMapRenderer gameMapRenderer;
 
     private GamePlayInput input;
     private Timer timer;
+
 
     public GamePlayScreen(Rogue rogue, GameGraphics graphics) {
 
@@ -38,6 +40,7 @@ public class GamePlayScreen implements Screen {
 
         this.gameMapRenderer = new GameMapRenderer(rogue.gameMap, graphics);
         this.timerRenderer = new TimerRenderer(graphics, timer);
+        this.gameStartController = new GameStartController(rogue, graphics);
         this.input = new GamePlayInput(rogue.gameMap, this.gameMapRenderer);
     }
 
@@ -48,7 +51,7 @@ public class GamePlayScreen implements Screen {
             timer.start();
         }
 
-        if(!rogue.finished) {
+        if(!rogue.finished && rogue.started) {
             timeAcc += delta * 1000 - timeDiff;
             inputTimeAcc += delta * 1000 - timeDiff;
 
@@ -67,6 +70,8 @@ public class GamePlayScreen implements Screen {
             timer.tick();
 
             timeDiff = (System.currentTimeMillis() - startTime) / 1000.0;
+        } else {
+            this.gameStartController.tick();
         }
 
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
@@ -75,6 +80,8 @@ public class GamePlayScreen implements Screen {
         //render the game map
         this.gameMapRenderer.render();
         this.timerRenderer.render();
+        this.gameStartController.render();
+
     }
 
     @Override

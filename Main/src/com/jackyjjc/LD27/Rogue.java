@@ -28,15 +28,18 @@ public class Rogue extends Game {
 
     private Controller controller;
     private Timer timer;
+    private long lastTime = 10000;
 
     public GameMap gameMap;
 
+    public boolean started;
     public boolean finished;
 
     public Rogue(Controller controller) {
+        this.started = false;
         this.controller = controller;
         this.gameMap = new GameMap();
-        this.finished = false;
+        this.finished = true;
     }
 
     @Override
@@ -52,13 +55,18 @@ public class Rogue extends Game {
 
         //check if game finished
         if(gameMap.getHeroes().isEmpty()) {
-            restart();
+            finished = true;
             return;
         }
 
         if(timer.time == 0) {
             finished = true;
             return;
+        }
+
+        if(timer.time < lastTime) {
+            gameMap.generateEnemies(5);
+            lastTime -= 1000;
         }
 
         //loop through all the heroes and see if there are any enemy in attack range
@@ -159,8 +167,11 @@ public class Rogue extends Game {
     }
 
     public void restart() {
+        this.started = true;
+        this.finished = false;
         gameMap.loadUnits();
         timer.reset();
+        lastTime = 10000;
     }
 
     public void setTimer(Timer timer) {

@@ -46,7 +46,7 @@ public class GameStartController {
 
     public void tick() {
         if(rogue.finished || !rogue.started) {
-            if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
                 rogue.restart();
             }
         }
